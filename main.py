@@ -8,23 +8,26 @@ from sklearn.linear_model import LinearRegression
 df = pd.read_csv('data/Car_sales.csv')
 
 """ 2. výpis prvních pěti řádků datasetu """
+print(" 2. výpis prvních pěti řádků datasetu ")
 print(df.head())
 
 """ 3. statistické informace o datasetu """
+print(" 3. statistické informace o datasetu ")
 print(df.describe())
 
 """ 4. počet chybějících hodnot v každém sloupci """
+print(" 4. počet chybějících hodnot v každém sloupci ")
 print(df.isnull().sum())
 
 """ 5. Vypsání každého řádku datasetu """
+print(" 5. Vypsání každého řádku datasetu ")
 for index, row in df.iterrows():
     print(row)
     print("\n")
 
 """ 6. Vztah mezi výkonem motoru a objemem motoru"""
 sns.scatterplot(x="Engine_size", y="Horsepower", data=df)
-plt.title("Vztah mezi výkonem a objemem motoru"
-          "")
+plt.title("Vztah mezi výkonem a objemem motoru")
 plt.show()
 
 """ 7. Vztah mezi výkonem motoru a objemem motoru s predikovanými hodnotami"""
@@ -44,7 +47,7 @@ plt.plot(X, y_pred, color='red', linewidth=2)
 # Nastavení popisků os a titulku grafu
 plt.xlabel("Engine size")
 plt.ylabel("Horsepower")
-plt.title("Engine size vs. Horsepower")
+plt.title("Vztah mezi výkonem motoru a objemem motoru \ns predikovanými hodnotami")
 
 # Zobrazení grafu
 plt.show()
