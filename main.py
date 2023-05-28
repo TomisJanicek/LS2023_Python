@@ -6,7 +6,7 @@ from sklearn.linear_model import LinearRegression
 
 import sys
 from PyQt6.QtWidgets import QApplication, QWidget, QLabel, QVBoxLayout, QLineEdit, QPushButton, QComboBox, QMessageBox, \
-    QDialog, QTextEdit
+    QDialog, QTextEdit, QGridLayout
 
 df = pd.read_csv('data/Car_sales.csv')
 
@@ -20,36 +20,39 @@ class AnalyzeApp(QWidget):
         self.An1_button = QPushButton('Výpis prvních pěti řádků datasetu')
         self.An1_button.clicked.connect(self.first_five)
 
+        self.An2_button = QPushButton('Statistické informace o datasetu')
+        self.An2_button.clicked.connect(self.statsOfCSV)
+
+        self.An_clear_button = QPushButton('Zmizík')
+        self.An_clear_button.clicked.connect(self.clearIT)
+
         self.data_textedit = QTextEdit()
         self.data_textedit.setReadOnly(True)
 
 
-        self.label1 = QLabel('První číslo:')
-        self.input1 = QLineEdit()
+        #self.label1 = QLabel('První číslo:') --- label
+        #self.input1 = QLineEdit() --- input
 
-        self.label2 = QLabel('Druhé číslo:')
-        self.input2 = QLineEdit()
+        #self.result_label = QLabel('Výsledek:')
+        #self.result = QLabel()
 
-        self.result_label = QLabel('Výsledek:')
-        self.result = QLabel()
+        #self.comboBox_label = QLabel('Možnosti:')
+        #self.comboBox = QComboBox()
+        #self.comboBox.addItem("A")
+        #self.comboBox.addItem("B")
+        #self.comboBox.addItem("C")
 
-        self.calculate_button = QPushButton('Spočítat')
-        self.calculate_button.clicked.connect(self.calculate_sum)
-
-        self.comboBox_label = QLabel('Možnosti:')
-        self.comboBox = QComboBox()
-        self.comboBox.addItem("A")
-        self.comboBox.addItem("B")
-        self.comboBox.addItem("C")
-
-        self.print_button = QPushButton('Vypsat')
-        self.print_button.clicked.connect(self.print_selection)
+        #self.print_button = QPushButton('Vypsat')
+        #self.print_button.clicked.connect(self.print_selection)
 
         # Vytvoření rozložení
-        layout = QVBoxLayout()
-        layout.addWidget(self.An1_button)
+        layout = QGridLayout()
 
+        layout.addWidget(self.An1_button,0,0)
+        layout.addWidget(self.An2_button,0,1)
+        layout.addWidget(self.An_clear_button,3,0,1,2) #Význam čísel: řádek, sloupec,sloupec,počet sloupců
 
+        """
         layout.addWidget(self.label1)
         layout.addWidget(self.input1)
         layout.addWidget(self.label2)
@@ -60,7 +63,8 @@ class AnalyzeApp(QWidget):
         layout.addWidget(self.comboBox_label)
         layout.addWidget(self.comboBox)
         layout.addWidget(self.print_button)
-        layout.addWidget(self.data_textedit)
+        """
+        layout.addWidget(self.data_textedit, 4, 0, 1, 2)
 
 
         self.setLayout(layout)
@@ -84,8 +88,16 @@ class AnalyzeApp(QWidget):
         msg_box.setText(f'Vybraná možnost: {selected_option}')
         msg_box.exec()
 
-    def first_five(self):
+    def first_five(self): #1. Výpis prvních pěti řádků datasetu
         text = df.head().to_string()
+        self.data_textedit.setPlainText(text)
+
+    def statsOfCSV(self):
+        text = df.describe().to_string()
+        self.data_textedit.setPlainText(text)
+
+    def clearIT(self):
+        text = ""
         self.data_textedit.setPlainText(text)
 
 
@@ -99,22 +111,6 @@ if __name__ == '__main__':
 
 
 """
-""" #Zde dolů jsou funkce na zpracování dat
-"""
-""" #1. Načtení souboru
-"""
-df = pd.read_csv('data/Car_sales.csv')
-
-""" #2. výpis prvních pěti řádků datasetu
-"""
-print(" 2. výpis prvních pěti řádků datasetu ")
-print(df.head())
-
-""" #3. statistické informace o datasetu
-"""
-print(" 3. statistické informace o datasetu ")
-print(df.describe())
-
 """ #4. počet chybějících hodnot v každém sloupci
 """
 print(" 4. počet chybějících hodnot v každém sloupci ")
